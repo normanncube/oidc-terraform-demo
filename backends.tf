@@ -3,7 +3,7 @@ terraform {
     bucket         = "samakoni-terraform-state-bucket"
     key            = "environments/dev/terraform.tfstate"
     region         = "eu-west-1"
-    lock           = true # Optional: Enable state locking
+    use_lockfile = false # Optional: Enable state locking
     encrypt        = true # Optional: Enable server-side encryption for the state file
   }
 }
