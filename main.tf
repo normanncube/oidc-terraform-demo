@@ -5,3 +5,13 @@ module "vpc" {
   #aws_region   = var.aws_region
 }
 
+module "security_groups" {
+source       = "./modules/compute"
+}
+module "ec2_instances" {
+source       = "./modules/compute"
+
+}
+
+
+
