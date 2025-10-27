@@ -78,10 +78,11 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.0
       - name: Download Terraform plan
         uses: actions/download-artifact@v4
         with:
-          terraform_version: 1.5.0
           name: tfplan
 
       - name: Terraform Apply
