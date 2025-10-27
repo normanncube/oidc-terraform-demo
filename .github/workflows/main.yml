@@ -28,7 +28,7 @@ jobs:
           terraform_version: 1.5.0
 
       - name: Terraform Init
-        run: terraform init -reconfigure
+        run: terraform init -lockfile=readonly
       - name: Terraform Validate
         run: terraform validate
 
@@ -51,7 +51,7 @@ jobs:
         with:
           terraform_version: 1.5.0
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -lockfile=readonly
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
