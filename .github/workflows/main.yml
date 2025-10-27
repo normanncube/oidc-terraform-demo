@@ -28,7 +28,7 @@ jobs:
           terraform_version: 1.5.0
 
       - name: Terraform Init
-        run: terraform init -lockfile=readonly
+        run: terraform init
       - name: Terraform Validate
         run: terraform validate
 
