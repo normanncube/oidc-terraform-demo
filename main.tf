@@ -4,3 +4,4 @@ module "vpc" {
   vpc_cidr     = var.vpc_cidr
   #aws_region   = var.aws_region
 }
+
