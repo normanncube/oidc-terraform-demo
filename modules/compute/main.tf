@@ -30,13 +30,13 @@ resource "aws_security_group_rule" "allow_http" {
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
-resource "aws_instance" "web" {
-  ami           = data.aws_ami.latest.id
-  instance_type = "t2.micro"
-  security_groups = [aws_security_group.web_sg.id]
+# resource "aws_instance" "web" {
+#   ami           = data.aws_ami.latest.id
+#   instance_type = "t2.micro"
+#   security_groups = [aws_security_group.web_sg.id]
         
-  tags = {
-    Name = "WebInstance"
-  }
-}
+#   tags = {
+#     Name = "WebInstance"
+#   }
+# }
 
