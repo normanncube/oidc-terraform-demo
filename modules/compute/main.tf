@@ -33,9 +33,9 @@ resource "aws_security_group_rule" "allow_http" {
 resource "aws_instance" "web" {
   ami           = data.aws_ami.latest.id
   instance_type = "t2.micro"
-  
-  
-  
+  security_groups = [aws_security_group.web_sg.name]
+  subnet_id     = var.subnet_id
+      
   tags = {
     Name = "WebInstance"
   }
