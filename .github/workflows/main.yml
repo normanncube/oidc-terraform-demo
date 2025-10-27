@@ -51,16 +51,16 @@ jobs:
         with:
           terraform_version: 1.5.0
       - name: Terraform Init
-        run: terraform init -reconfigure
+        run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplans
+        run: terraform plan -out=tfplan
 
       - name: Save plan for later jobs
         uses: actions/upload-artifact@v4
         with:
-          name: tfplans
-          path: tfplans
+          name: tfplan
+          path: tfplan
 
   terraform_apply:
     name: Terraform Apply
@@ -83,7 +83,7 @@ jobs:
       - name: Download Terraform plan
         uses: actions/download-artifact@v4
         with:
-          name: tfplans
+          name: tfplan
 
       - name: Terraform Apply
-        run: terraform apply "tfplans"
+        run: terraform apply tfplan
