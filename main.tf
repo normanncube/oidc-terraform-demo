@@ -8,11 +8,11 @@ module "vpc" {
 module "security_groups" {
   source       = "./modules/compute"
   vpc_id       = module.vpc.vpc_id
-  subnet_id    = module.vpc.public_subnet_ids[0]
+  subnet_id    = module.vpc.public_subnet_ids
 }
 module "ec2_instances" {
   source       = "./modules/compute"
-  subnet_id    = module.vpc.public_subnet_ids[0]
+  subnet_id    = module.vpc.public_subnet_ids
   vpc_id       = module.vpc.vpc_id
 
 }
