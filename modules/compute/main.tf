@@ -17,7 +17,7 @@ data "aws_ami" "latest" {
 resource "aws_security_group" "web_sg" {
   name        = "web-sg"
   description = "Allow HTTP and SSH traffic"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id      = var.vpc_id
 }
 
  
@@ -34,7 +34,7 @@ resource "aws_instance" "web" {
   ami           = data.aws_ami.latest.id
   instance_type = "t2.micro"
   security_groups = [aws_security_group.web_sg.id]
-  subnet_id     = module.vpc.public_subnet_ids[0]
+  
   
   tags = {
     Name = "WebInstance"
