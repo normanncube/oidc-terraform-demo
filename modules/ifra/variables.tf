@@ -7,4 +7,5 @@ variable "vpc_cidr" {
 variable "project_name" {
   description = "The name of the project to tag resources"
   type        = string
+  default     = "myproject"
 }
