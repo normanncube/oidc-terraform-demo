@@ -10,7 +10,63 @@ permissions:
   id-token: write # Allows requesting an OIDC token
   contents: read # Required for actions/checkout
 jobs:
-  terraform:
+  terraform_setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_OIDC_ROLE }}
+          aws-region: eu-west-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.5.0
+
+      - name: Terraform Init
+        run: terraform init -migrate-state
+      - name: Terraform Validate
+        run: terraform validate
+
+  terraform_plan:
+    name: Terraform Plan
+    needs: terraform_setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_OIDC_ROLE }}
+          aws-region: eu-west-1
+
+      - name: Plan Terraform
+        uses: hashicorp/setup-terraform@v4
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init -migrate-state
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      - name: Save plan for later jobs
+        uses: actions/upload-artifact@v4
+        with:
+          terraform_version: 1.5.0
+          name: tfplan
+          path: tfplan
+
+  terraform_apply:
+    name: Terraform Apply
+    needs: terraform_plan
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -27,12 +83,10 @@ jobs:
         with:
           terraform_version: 1.5.0
 
-      - name: Terraform Init
-        run: terraform init -migrate-state
-
-      - name: Terraform Plan
-        run: terraform plan
+      - name: Download Terraform plan
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/development' && github.event_name == 'push'
-        run: terraform apply -auto-approve
+        run: terraform apply "tfplan"
