@@ -54,13 +54,13 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan -out=tfplans
 
       - name: Save plan for later jobs
         uses: actions/upload-artifact@v4
         with:
-          name: tfplan
-          path: tfplan
+          name: tfplans
+          path: tfplans
 
   terraform_apply:
     name: Terraform Apply
