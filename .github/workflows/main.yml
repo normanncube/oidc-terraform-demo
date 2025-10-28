@@ -99,7 +99,7 @@ jobs:
 
   terraform_destroy:
     name: Terraform Destroy
-
+    needs: terraform_apply
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
