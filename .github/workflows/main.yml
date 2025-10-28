@@ -97,6 +97,7 @@ jobs:
         run: terraform apply tfplan
 
   terraform_destroy:
+    if: github.event.inputs.terraform_destroy == 'true'
     name: Terraform Destroy
 
     runs-on: ubuntu-latest
