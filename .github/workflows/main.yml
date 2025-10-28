@@ -10,7 +10,9 @@ on:
         options:
           - terraform_apply
           - terraform_destroy
-
+  push:
+    branches:
+      - development
 permissions:
   id-token: write # Allows requesting an OIDC token
   contents: read # Required for actions/checkout
