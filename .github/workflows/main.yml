@@ -1,17 +1,16 @@
 name: Main Workflow
 on:
-  push:
-    branches:
-      - development
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
-      terraform_destroy:
-        description: "Set to true to destroy infrastructure"
+      operation:
+        description: "Select operation to perform"
         required: true
-        default: ""
+        default: "terraform_destroy"
+        type: choice
+        options:
+          - terraform_apply
+          - terraform_destroy
+
 permissions:
   id-token: write # Allows requesting an OIDC token
   contents: read # Required for actions/checkout
